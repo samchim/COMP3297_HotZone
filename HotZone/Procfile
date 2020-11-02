@@ -1,0 +1,1 @@
+web: gunicorn HotZone_config.wsgi --log-file -
