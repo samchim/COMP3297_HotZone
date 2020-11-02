@@ -155,12 +155,10 @@ def LocationCacheCreate(request):
         print(request.POST)
         print("------")
         if request.POST['mode'] == 'search':
-            exist = len(LocationCacheDateset.filter(
-                locationName=request.POST['locationName'])) != 0
+            exist = len(LocationCacheDateset.filter(locationName=request.POST['locationName'])) != 0
             if not(exist):
                 context['exist'] = False
-                queryUrl = "https://geodata.gov.hk/gs/api/v1.0.0/locationSearch?q=" + \
-                    request.POST['locationName']
+                queryUrl = "https://geodata.gov.hk/gs/api/v1.0.0/locationSearch?q=" + request.POST['locationName']
                 queryUrl = queryUrl.replace(" ", "%20")
                 # print(queryUrl)
                 webURL = urllib.request.urlopen(queryUrl)
