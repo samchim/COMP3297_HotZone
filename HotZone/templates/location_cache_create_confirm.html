@@ -1,0 +1,19 @@
+<h1> Create New Location Data </h1>
+
+<p>You are about to create new location Data</p>
+<p> </p>
+<p>Name: {{ jsonData.nameEN }}</p>
+<p>Address: {{ jsonData.addressEN }}</p>
+<p>X Cord: {{ jsonData.x }}</p>
+<p>Y Cord: {{ jsonData.y }}</p>
+<p> </p>
+
+<form method="post">
+    {% csrf_token %}
+    <input type="hidden" name="mode" value="confirm">
+    <input type="hidden" name="jsonData" value="{{ jsonData }}">
+
+    <input type="submit" value="Confirm">
+</form>
+
+<a href="{% url 'case-all' %}">Back to Caes List</a>

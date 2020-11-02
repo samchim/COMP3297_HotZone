@@ -1,0 +1,3 @@
+limitation:
+1, missing vaildation of input during create/update
+2, messy redirection after successful create/update/delete

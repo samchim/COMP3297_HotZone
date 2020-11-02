@@ -4,7 +4,7 @@
     {% csrf_token %}
     <input style="display: none;" name="caseNumber" value="{{ caseNumber_pk }}">
     <p>
-        <label>locationCache: </label>
+        <label>Location: </label>
         <select name="locationCache">
             {% for locationCache in locationCache_list %}
             <option value="{{ locationCache.pk }}">
@@ -15,16 +15,16 @@
         <a href="{% url 'location-cache-create' %}">New Location Data</a>
     </p>
     <p>
-        <label>dateFrom: </label>
-        <input type="date" name="dateFrom" value="2020-02-21">
+        <label>Date From: </label>
+        <input type="date" name="dateFrom" >
     </p>
     <p>
-        <label>dateTo: </label>
-        <input type="date" name="dateTo" value="2020-02-23">
+        <label>Date To: </label>
+        <input type="date" name="dateTo" >
     </p>
     <p>
-        <label>category: </label>
-        <input type="text" name="category" value="Visit">
+        <label>Category: </label>
+        <input type="text" name="category" >
     </p>
     <input type="submit" value="Create">
 </form>

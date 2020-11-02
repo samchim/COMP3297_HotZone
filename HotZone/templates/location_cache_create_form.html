@@ -2,9 +2,10 @@
 
 <form method="post">
     {% csrf_token %}
+    <input type="hidden" name="mode" value="search">
     <p>
-        <label>Location: </label>
-        <input type="text" name="locationName" value="Good Cheer Villa">
+        <label>Search Location: </label>
+        <input type="text" name="locationName" value="Hau Fook Building">
     </p>
-    <input type="submit" value="Create">
+    <input type="submit" value="Search">
 </form>

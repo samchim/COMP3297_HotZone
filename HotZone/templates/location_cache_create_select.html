@@ -1,0 +1,31 @@
+<h1> Create New Location Data </h1>
+
+{% if exist %}
+<p>The location you searched has already exist</p>
+
+{% elif jsonData_list|length > 0 %}
+
+<form method="post">
+    {% csrf_token %}
+    <input type="hidden" name="mode" value="select">
+
+    <p>
+        <label>location avaliable: </label>
+        <select name="jsonData">
+            {% for jsonData in jsonData_list %}
+            <option value="{{ jsonData }}">
+                {{ jsonData.addressEN }}
+            </option>
+            {% endfor %}
+        </select>
+    </p>
+
+    <input type="submit" value="Select">
+</form>
+
+{% else %}
+<p>No matching result</p>
+
+{% endif %}
+
+<a href="{% url 'case-all' %}">Back to Caes List</a>
