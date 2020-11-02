@@ -1,0 +1,13 @@
+<h1>Showing all customers</h1>
+<ul>
+    {% for customer in customer_list %}
+    <li>
+        <a href="{% url 'customer-orders' customer.pk %}">
+            {{ customer.name }}
+        </a>
+        ({{ customer.order_set.all | length }})
+    </li>
+    {% empty %}
+    <li>No customer yet.</li>
+    {% endfor %}
+</ul>

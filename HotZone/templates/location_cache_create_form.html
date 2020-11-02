@@ -1,0 +1,10 @@
+<h1> Create New Location Data </h1>
+
+<form method="post">
+    {% csrf_token %}
+    <p>
+        <label>Location: </label>
+        <input type="text" name="locationName" value="Good Cheer Villa">
+    </p>
+    <input type="submit" value="Create">
+</form>

@@ -1,0 +1,30 @@
+<h1> Update Location Record for {{ object }} </h1>
+
+<form method="post">
+    {% csrf_token %}
+    <input style="display: none;" name="case" value="{{ Location.case_id }}">
+    <p>
+        <label>locationCache: </label>
+        <select name="locationCache">
+            {% for locationCache in locationCache_list %}
+            <option value="{{ locationCache.pk }}">
+                {{ locationCache.locationName }}
+            </option>
+            {% endfor %}
+        </select>
+        <a href="{% url 'location-cache-create' %}">New Location Data</a>
+    </p>
+    <p>
+        <label>dateFrom: </label>
+        <input type="date" name="dateFrom" value="{{ Location.dateFrom }}">
+    </p>
+    <p>
+        <label>dateTo: </label>
+        <input type="date" name="dateTo" value="{{ Location.dateTo }}">
+    </p>
+    <p>
+        <label>category: </label>
+        <input type="text" name="category" value="{{ Location.category }}">
+    </p>
+    <input type="submit" value="Update">
+</form>

@@ -1,0 +1,30 @@
+<h1> Create New Location Record for {{ caseNumber }} </h1>
+
+<form method="post">
+    {% csrf_token %}
+    <input style="display: none;" name="caseNumber" value="{{ caseNumber_pk }}">
+    <p>
+        <label>locationCache: </label>
+        <select name="locationCache">
+            {% for locationCache in locationCache_list %}
+            <option value="{{ locationCache.pk }}">
+                {{ locationCache.locationName }}
+            </option>
+            {% endfor %}
+        </select>
+        <a href="{% url 'location-cache-create' %}">New Location Data</a>
+    </p>
+    <p>
+        <label>dateFrom: </label>
+        <input type="date" name="dateFrom" value="2020-02-21">
+    </p>
+    <p>
+        <label>dateTo: </label>
+        <input type="date" name="dateTo" value="2020-02-23">
+    </p>
+    <p>
+        <label>category: </label>
+        <input type="text" name="category" value="Visit">
+    </p>
+    <input type="submit" value="Create">
+</form>

@@ -1,0 +1,67 @@
+<h1>Showing all case</h1>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+    jQuery(document).on("click", "tr > td", function () {
+        var $this = jQuery(this);
+
+        // ignore clicks on last column
+        if ($this.is(":last-child")) return;
+
+        // unhighlight currently selected row
+        jQuery(".highlight").removeClass("highlight");
+
+        // change the highlight of the row        
+        $this.parent().addClass("highlight");
+    });
+
+    function call_counter(url) {
+        window.open(url);
+    }
+</script>
+
+<style>
+    table,
+    th,
+    td {
+        border: 1px solid rgb(235, 59, 59);
+        border-collapse: collapse;
+    }
+
+    .highlight {
+        background-color: #fa9da9;
+    }
+</style>
+
+<table style="width:100% ">
+    <tr>
+        <th>Case Number</th>
+        <th>Delete</th>
+        <th>Update</th>
+    </tr>
+    {% for case in case_list %}
+    <tr>
+        <td>
+            <a href="{% url 'case' case.caseNumber %}">
+                {{ case.caseNumber }}
+            </a>
+        </td>
+        <td>
+            <a href="{% url 'case-delete' case.pk %}">
+                Delete
+            </a>
+        </td>
+        <td>
+            <a href="{% url 'case-update' case.pk %}">
+                Update
+            </a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+<a href="{% url 'case-create' %}">
+    Add Case
+</a>

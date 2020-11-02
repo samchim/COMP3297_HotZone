@@ -1,0 +1,86 @@
+<style>
+    table,
+    th,
+    td {
+        border: 1px solid rgb(235, 59, 59);
+        border-collapse: collapse;
+    }
+
+    table {
+        margin: 20px 0;
+    }
+
+    .highlight {
+        background-color: #fa9da9;
+    }
+
+    input {
+        width: 100%;
+    }
+</style>
+
+<h1>Showing all location by {{ case.caseNumber }}</h1>
+
+<div style="display: flex; flex-direction: column">
+    <a href="{% url 'case-delete' case.pk %}">Delete Case</a>
+    <a href="{% url 'case-update' case.pk %}">Update Case</a>
+</div>
+
+<form>
+    <table style="width:100% ">
+        <tr>
+            <th>Case Number</th>
+            <th>Date Confirmed</th>
+            <th>Local or Imported</th>
+            <th>Patient Name</th>
+            <th>ID Number</th>
+            <th>Date of Birth</th>
+            <th>Virus Name</th>
+            <th>Disease</th>
+            <th>Max Infectious Period</th>
+        </tr>
+        <tr>
+            <td>{{ case.caseNumber }}</td>
+            <td>{{ case.dateConfirmed }}</td>
+            <td>{{ case.localOrImported }}</td>
+            <td>{{ case.patientName }}</td>
+            <td>{{ case.idNumber }}</td>
+            <td>{{ case.dateOfBirth }}</td>
+            <td>{{ case.virusName }}</td>
+            <td>{{ case.disease }}</td>
+            <td>{{ case.maxInfectiousPeriod }}</td>
+        </tr>
+    </table>
+    <!-- <input type="submit" value="Modify Case"> -->
+</form>
+
+<table style="width:100% ">
+    <tr>
+        <td>Location</td>
+        <td>Address</td>
+        <td>X Cord</td>
+        <td>Y Cord</td>
+        <td>Date From</td>
+        <td>Date To</td>
+        <td>Category</td>
+        <td>Delete</td>
+        <td>Update</td>
+    </tr>
+    {% for location in loaction_list %}
+    <tr>
+        <td>{{ location.locationCache.locationName }}</td>
+        <td>{{ location.locationCache.address }}</td>
+        <td>{{ location.locationCache.xCord }}</td>
+        <td>{{ location.locationCache.yCord }}</td>
+        <td>{{ location.dateFrom }}</td>
+        <td>{{ location.dateTo }}</td>
+        <td>{{ location.category }}</td>
+        <td><a href="{% url 'location-delete' location.pk %}">Delete</a></td>
+        <td><a href="{% url 'location-update' location.pk %}">Update</a></td>
+    </tr>
+    {% endfor %}
+</table>
+
+<div style="display: flex; flex-direction: column">
+    <a href="{% url 'location-create' case.caseNumber %}">New Location</a>
+</div>

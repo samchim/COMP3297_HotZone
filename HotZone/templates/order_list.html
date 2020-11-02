@@ -1,0 +1,17 @@
+<h1>Showing all orders by {{ customer.name }}</h1>
+
+<ul>
+
+    {% for order in order_list %}
+    <li>[{{ order.status }}] {{ order.time }}
+        <ul>
+            {% for item in order.items.all %}
+            <li>{{ item.name }} ({{ item.price }})</li>
+            {% endfor %}
+        </ul>
+    </li>
+    {% empty %}
+    <li>No order yet.</li>
+    {% endfor %}
+
+</ul>

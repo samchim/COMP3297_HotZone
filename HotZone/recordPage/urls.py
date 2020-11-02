@@ -1,0 +1,55 @@
+from django.urls import path
+from recordPage import views
+
+urlpatterns = [
+    path(
+        'case/<int:caseNumber>',
+        views.CaseView.as_view(),
+        name='case'
+    ),
+    path(
+        'case_list',
+        views.CaseViewAll.as_view(),
+        name='case-all'
+    ),
+    path(
+        '',
+        views.hi,
+        name='hi'
+    ),
+    path(
+        'case_create',
+        views.CaseCreate.as_view(),
+        name='case-create'
+    ),
+    path(
+        'delete/<pk>',
+        views.CaseDelete.as_view(),
+        name='case-delete'
+    ),
+    path(
+        'update/<pk>',
+        views.CaseUpdate.as_view(),
+        name='case-update'
+    ),
+    path(
+        '<int:caseNumber>/location_create',
+        views.LocationCreate,
+        name='location-create'
+    ),
+    path(
+        'location_delete/<pk>',
+        views.LocationDelete.as_view(),
+        name='location-delete'
+    ),
+    path(
+        'location_update/<pk>',
+        views.LocationUpdate,
+        name='location-update'
+    ),
+    path(
+        'location_cache_create',
+        views.LocationCacheCreate,
+        name='location-cache-create'
+    ),
+]
