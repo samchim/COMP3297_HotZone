@@ -19,7 +19,7 @@ urlpatterns = [
     ),
     path(
         'case_create',
-        views.CaseCreate.as_view(),
+        views.CaseCreate,
         name='case-create'
     ),
     path(
@@ -28,8 +28,8 @@ urlpatterns = [
         name='case-delete'
     ),
     path(
-        'update/<pk>',
-        views.CaseUpdate.as_view(),
+        'update/<caseNumber>',
+        views.CaseUpdate,
         name='case-update'
     ),
     path(
@@ -48,7 +48,7 @@ urlpatterns = [
         name='location-update'
     ),
     path(
-        'location_cache_create',
+        'location_cache_create/<redirectType>/<pkOrCaseNumber>',
         views.LocationCacheCreate,
         name='location-cache-create'
     ),

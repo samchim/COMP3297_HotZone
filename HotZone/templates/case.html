@@ -23,7 +23,7 @@
 
 <div style="display: flex; flex-direction: column">
     <a href="{% url 'case-delete' case.pk %}">Delete Case</a>
-    <a href="{% url 'case-update' case.pk %}">Update Case</a>
+    <a href="{% url 'case-update' case.caseNumber %}">Update Case</a>
 </div>
 
 <form>

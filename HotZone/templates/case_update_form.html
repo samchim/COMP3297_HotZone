@@ -1,0 +1,40 @@
+<h1> Update Case Record {{ Case.caseNumber }} </h1>
+
+<form method="post" id="caseCreateForm">
+    {% csrf_token %}
+    <p>
+        <label>Case Number: </label>
+        <input type="text" name="caseNumber" value="{{ Case.caseNumber }}">
+    </p>
+    <p>
+        <label>Date Confirmed: </label>
+        <input type="date" name="dateConfirmed" value="{{ dateConfirmed }}">
+    </p>
+    <p>
+        <label>Local or Import: </label>
+        <select form="caseCreateForm" name="localOrImported" value="{{ Case.localOrImported }}">
+            <option value="Loacl">Local</option>
+            <option value="Import">Import</option>
+        </select>
+    </p>
+    <p>
+        <label>Patient Name: </label>
+        <input type="text" name="patientName" value="{{ Case.patientName }}">
+    </p>
+    <p>
+        <label>Id Number: </label>
+        <input type="text" name="idNumber" value="{{ Case.idNumber }}">
+    </p>
+    <p>
+        <label>Date Of Birth: </label>
+        <input type="date" name="dateOfBirth" value="{{ dateOfBirth }}">
+    </p>
+    <p>
+        <label>Virus: </label>
+        <select form="caseCreateForm" name="virus" value="{{ Case.virus }}">
+            <option value="SARS-CoV-2">SARS-CoV-2</option>
+            <option value="GGGGGG">GGGGGG</option>
+        </select>
+    </p>
+    <input type="submit" value="Update">
+</form>

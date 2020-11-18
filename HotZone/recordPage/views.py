@@ -9,6 +9,8 @@ from django.shortcuts import redirect
 
 from django.http import HttpResponse
 
+import datetime
+
 import urllib.request
 import json
 
@@ -31,58 +33,75 @@ class CaseViewAll(ListView):
     template_name = "case_list.html"
     model = Case
 
+def CaseCreate(request):
+    context = {}
 
-class CaseCreate(CreateView):
-    model = Case
-    fields = [
-        'caseNumber',
-        'dateConfirmed',
-        'localOrImported',
-        'patientName',
-        'idNumber',
-        'dateOfBirth',
-        'virusName',
-        'disease',
-        'maxInfectiousPeriod',
-    ]
-    template_name_suffix = '_create_form'
-    success_url = '/recordPage/case_list'
+    if request.method == 'GET':
+        return render(request, "case_create_form.html", context)
+
+    if request.method == 'POST':
+        print(request.POST)
+
+        virus = request.POST['virus']
+        if virus == "SARS-CoV-2":
+            disease = "COVID-19"
+            maxInfectiousPeriod = 14
+        elif virus == "GGGGGG":
+            disease = "Oh-No!"
+            maxInfectiousPeriod = 7
+        
+        Case.objects.create(
+            caseNumber  = request.POST['caseNumber'],
+            dateConfirmed = request.POST['dateConfirmed'],
+            localOrImported = request.POST['localOrImported'],
+            patientName = request.POST['patientName'],
+            idNumber = request.POST['idNumber'],
+            dateOfBirth = request.POST['dateOfBirth'],
+            virusName = virus,
+            disease = disease,
+            maxInfectiousPeriod = maxInfectiousPeriod,
+        )
+        return redirect('/recordPage/case/'+ request.POST['caseNumber'])
 
 
 class CaseDelete(DeleteView):
     model = Case
     success_url = '/recordPage/case_list'
 
+def CaseUpdate(request, caseNumber):
+    context = {}
 
-class CaseUpdate(UpdateView):
-    model = Case
-    fields = [
-        'caseNumber',
-        'dateConfirmed',
-        'localOrImported',
-        'patientName',
-        'idNumber',
-        'dateOfBirth',
-        'virusName',
-        'disease',
-        'maxInfectiousPeriod',
-    ]
-    template_name_suffix = '_update_form'
-    success_url = '/recordPage/case_list'
+    caseDataset = Case.objects.get(caseNumber=caseNumber)
+    context['Case'] = caseDataset
+    context['dateConfirmed'] = caseDataset.dateConfirmed.strftime('%Y-%m-%d')
+    context['dateOfBirth'] = caseDataset.dateOfBirth.strftime('%Y-%m-%d')
 
+    if request.method == 'GET':
+        return render(request, "case_update_form.html", context)
 
-class LocationCreate(CreateView):
-    model = Location
-    fields = [
-        'case',
-        'locationCache',
-        'dateFrom',
-        'dateTo',
-        'category',
-    ]
-    template_name_suffix = '_create_form'
-    success_url = '/recordPage/case_list'
+    if request.method == 'POST':
+        print(request.POST)
 
+        virus = request.POST['virus']
+        if virus == "SARS-CoV-2":
+            disease = "COVID-19"
+            maxInfectiousPeriod = 14
+        elif virus == "GGGGGG":
+            disease = "Oh-No!"
+            maxInfectiousPeriod = 7
+        
+        Case.objects.filter(caseNumber=caseNumber).update(
+            caseNumber  = request.POST['caseNumber'],
+            dateConfirmed = request.POST['dateConfirmed'],
+            localOrImported = request.POST['localOrImported'],
+            patientName = request.POST['patientName'],
+            idNumber = request.POST['idNumber'],
+            dateOfBirth = request.POST['dateOfBirth'],
+            virusName = virus,
+            disease = disease,
+            maxInfectiousPeriod = maxInfectiousPeriod,
+        )
+        return redirect('/recordPage/case/'+ request.POST['caseNumber'])
 
 def hi(request):
     print("greeting form user")
@@ -125,6 +144,8 @@ def LocationUpdate(request, pk):
     loactionDataset = Location.objects.get(pk=pk)
     context['Location'] = loactionDataset
     context['LocationCache_list'] = LocationCache.objects.all()
+    context['dateFrom'] = loactionDataset.dateFrom.strftime('%Y-%m-%d')
+    context['dateTo'] = loactionDataset.dateTo.strftime('%Y-%m-%d')
 
     if request.method == 'GET':
         return render(request, "location_update_form.html", context)
@@ -142,7 +163,7 @@ def LocationUpdate(request, pk):
         return redirect('/recordPage/case/'+str(loactionDataset.case))
 
 
-def LocationCacheCreate(request):
+def LocationCacheCreate(request, redirectType, pkOrCaseNumber):
     context = {}
     LocationCacheDateset = LocationCache.objects.all()
     context['locationCache_list'] = LocationCacheDateset
@@ -170,13 +191,25 @@ def LocationCacheCreate(request):
                 context['jsonData_list'] = jsonData_list
             else:
                 context['exist'] = True
+                return render(request, "loaction_cache_already_exist.html", context)
             return render(request, "location_cache_create_select.html", context)
 
         elif request.POST['mode'] == 'select':
             jsonData_str = parse_json(request.POST['jsonData'])
             print(jsonData_str)
-            context['jsonData'] = json.loads(jsonData_str)
-            return render(request, "location_cache_create_confirm.html", context)
+            jsonData = json.loads(jsonData_str)
+            context['jsonData'] = jsonData
+            
+            LocationCacheData = LocationCache.objects.filter(
+                locationName = jsonData["nameEN"],
+                address = jsonData["addressEN"],
+                xCord = jsonData["x"],
+                yCord = jsonData["y"],
+            )
+            if LocationCacheData.count() == 0 :
+                return render(request, "location_cache_create_confirm.html", context)
+            else: 
+                return render(request, "loaction_cache_already_exist.html", context)
 
         elif request.POST['mode'] == 'confirm':
             jsonData_str = parse_json(request.POST['jsonData'])
@@ -187,8 +220,10 @@ def LocationCacheCreate(request):
                 xCord = jsonData["x"],
                 yCord = jsonData["y"],
             )
-            # print(jsonData["addressEN"])
-            return redirect('/recordPage/case_list')
+            if redirectType == "create":
+                return redirect('/recordPage/' + pkOrCaseNumber + '/location_create')
+            elif redirectType == "update":
+                return redirect('/recordPage/location_update/' + pkOrCaseNumber)
 
 
 def parse_json(jsonData_str):

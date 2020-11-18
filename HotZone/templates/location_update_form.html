@@ -1,4 +1,4 @@
-<h1> Update Location Record for {{ Location.case }}( {{ Location.locationCache.locationName }}) </h1>
+<h1> Update Visit Record for {{ Location.case }}( {{ Location.locationCache.locationName }}) </h1>
 
 <form method="post">
     {% csrf_token %}
@@ -12,19 +12,28 @@
             </option>
             {% endfor %}
         </select>
-        <a href="{% url 'location-cache-create' %}">New Location Data</a>
+        <a href="/recordPage/location_cache_create/update/{{ Location.pk }}">New Location Data</a>
     </p>
     <p>
         <label>Date From: </label>
-        <input type="date" name="dateFrom" value="{{ Location.dateFrom }}">
+        <input type="date" name="dateFrom" value="{{ dateFrom }}">
     </p>
     <p>
         <label>Date To: </label>
-        <input type="date" name="dateTo" value="{{ Location.dateTo }}">
+        <input type="date" name="dateTo" value="{{ dateTo }}">
     </p>
     <p>
         <label>category: </label>
-        <input type="text" name="category" value="{{ Location.category }}">
+        <select type="text" name="category" value="{{ Location.category }}">
+            <option value="Residence">Residence</option>
+            <option value="Workplace">Workplace</option>
+            <option value="Visit">Visit</option>
+        </select>
     </p>
-    <input type="submit" value="Update">
+    <p>
+        <input type="submit" value="Update">
+    </p>
+    <p>
+        <a href="/recordPage/case/{{ Location.case }}">Back to Caes</a>
+    </p>
 </form>

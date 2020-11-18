@@ -38,8 +38,14 @@
 <table style="width:100% ">
     <tr>
         <th>Case Number</th>
-        <th>Delete</th>
-        <th>Update</th>
+        <th>Date Confirmed</th>
+        <th>Local or Imported</th>
+        <th>Patient Name</th>
+        <th>ID Number</th>
+        <th>Date of Birth</th>
+        <th>Virus Name</th>
+        <th>Disease</th>
+        <th>Max Infectious Period</th>
     </tr>
     {% for case in case_list %}
     <tr>
@@ -48,16 +54,14 @@
                 {{ case.caseNumber }}
             </a>
         </td>
-        <td>
-            <a href="{% url 'case-delete' case.pk %}">
-                Delete
-            </a>
-        </td>
-        <td>
-            <a href="{% url 'case-update' case.pk %}">
-                Update
-            </a>
-        </td>
+        <td>{{ case.dateConfirmed }}</td>
+        <td>{{ case.localOrImported }}</td>
+        <td>{{ case.patientName }}</td>
+        <td>{{ case.idNumber }}</td>
+        <td>{{ case.dateOfBirth }}</td>
+        <td>{{ case.virusName }}</td>
+        <td>{{ case.disease }}</td>
+        <td>{{ case.maxInfectiousPeriod }}</td>
     </tr>
     {% endfor %}
 </table>

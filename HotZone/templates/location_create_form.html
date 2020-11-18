@@ -1,4 +1,4 @@
-<h1> Create New Location Record for {{ caseNumber }} </h1>
+<h1> Create New Visit Record for {{ caseNumber }} </h1>
 
 <form method="post">
     {% csrf_token %}
@@ -12,7 +12,7 @@
             </option>
             {% endfor %}
         </select>
-        <a href="{% url 'location-cache-create' %}">New Location Data</a>
+        <a href="/recordPage/location_cache_create/create/{{ caseNumber }}">New Location Data</a>
     </p>
     <p>
         <label>Date From: </label>
@@ -23,8 +23,17 @@
         <input type="date" name="dateTo" >
     </p>
     <p>
-        <label>Category: </label>
-        <input type="text" name="category" >
+        <label>category: </label>
+        <select type="text" name="category" value="{{ Location.category }}">
+            <option value="Residence">Residence</option>
+            <option value="Workplace">Workplace</option>
+            <option value="Visit">Visit</option>
+        </select>
     </p>
-    <input type="submit" value="Create">
+    <p>
+        <input type="submit" value="Create">
+    </p>
+    <p>
+        <a href="/recordPage/case/{{ caseNumber }}">Back to Caes</a>
+    </p>
 </form>
