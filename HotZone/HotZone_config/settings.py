@@ -25,15 +25,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = '1q*v42nl_cg#61x#evag+p(sgg9$=!l^%ohwlfyio@1tgu)yim'
-SECRET_KEY = env('HOTZONE_SECRET_KEY')
+SECRET_KEY = '1q*v42nl_cg#61x#evag+p(sgg9$=!l^%ohwlfyio@1tgu)yim'
+# SECRET_KEY = env('HOTZONE_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
 DEBUG = env.bool('HOTZONE_DEBUG', default=False)
 
 ALLOWED_HOSTS = ['murmuring-brushlands-80619.herokuapp.com',
-                 'localhost', '127.0.0.1']
+                 'localhost', '127.0.0.1', '0.0.0.0']
 
 
 # Application definition
@@ -91,20 +91,20 @@ WSGI_APPLICATION = 'HotZone_config.wsgi.application'
 #     }
 # }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'databasename',
-#         'USER': 'username',
-#         'PASSWORD': 'password',
-#         'HOST': 'localhost',
-#         'PORT': '',
-#     }
-# }
-
 DATABASES = {
-    'default': env.dj_db_url('DATABASE_URL')
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'databasename',
+        'USER': 'username',
+        'PASSWORD': 'password',
+        'HOST': 'localhost',
+        'PORT': '',
+    }
 }
+
+# DATABASES = {
+#     'default': env.dj_db_url('DATABASE_URL')
+# }
 
 
 # Password validation
